@@ -76,6 +76,9 @@ class EventCard extends Component {
               {startHr + ":" + startMin + " " + startampm + " "}-
               {" " + endHr + ":" + endMin + " " + endampm}
             </p>
+            <p>
+              {item.ageGroup} 
+            </p>
           </Card.Body>
         </Card>
         <Card className="event-card date-card">

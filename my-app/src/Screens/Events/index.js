@@ -60,8 +60,6 @@ class Events extends Component {
         let indexColor = eventTypeList && eventTypeList.indexOf(x.type);
         x.colorName = this.colors[indexColor];
       });
-    console.log(eventsList);
-    // let indexColor = eventTypeList && eventTypeList.indexOf(item.event_type);
     return (
       <div className="div-event">
         <Row>
@@ -117,37 +115,9 @@ class Events extends Component {
           eventTypeList={eventTypeList}
         />
         <Row>
-          {/* <MapContainer /> */}
+          <MapContainer />
         </Row>
-        {/* <Row>
-          <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}>
-            <div>
-              <FirebaseDatabaseNode
-              path="Mastersheet/"
-              limitToFirst={this.state.limit}
-              orderByValue={"Timestamp"}
-              >
-              {d => {
-                return (
-                  <React.Fragment>
-                    <pre>Path {d.path}</pre>
-                    <pre style={{ height: 300, overflow: "auto" }}>
-                      Value {d.Event_Name}
-                    </pre>
-                    <button
-                      onClick={() => {
-                        this.setState(state => ({ limit: state.limit + 2 }));
-                      }}
-                    >
-                      Load more
-                    </button>
-                  </React.Fragment>
-                );
-              }}
-              </FirebaseDatabaseNode>
-            </div>
-          </FirebaseDatabaseProvider>
-        </Row> */}
+
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import { put, takeEvery } from "redux-saga/effects";
+import {call, put, takeEvery } from "redux-saga/effects";
 
 import {
   FETCH_EVENTS_INIT_ACTION,
@@ -12,7 +12,9 @@ import firebase from "../../firebase"
 // import { ipConfig } from "../../../config";
 
 function* fetchEvents() {
-  // const token = localStorage.getItem("token");
+  const token = "iMBCEtS8RMSWK_oWYKFKKw	-zK4";
+  //const token = "gm4WDedIeJPVeAddFiLZVVzsqBcDAO5Pk7Uuk5agYDk";
+  //const token = localStorage.getItem("token");
   // try {
   //   const res = yield fetch(`${ipConfig.URL}events`, {
   //     method: "GET",
@@ -42,15 +44,55 @@ function* fetchEvents() {
   //   } else {
   //   }
   // }
+  // const user = yield call("https://geocode.search.hereapi.com/v1/geocode?q=Invalidenstr+117+Berlin&apiKey=DLRZl6_8N9Mc2e5GJcfUh8eARww0co3e8WP3kKC-zK4");
+  // console.log(user);
+  const res = yield fetch(`https://geocode.search.hereapi.com/v1/geocode?q=Invalidenstr+117+Berlin&apiKey=DLRZl6_8N9Mc2e5GJcfUh8eARww0co3e8WP3kKC-zK4`, {
+    //const res = yield fetch(`https://www.google.com`, {
+    mode: 'no-cors',
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  });
 
+  // const response = yield fetch( `https://www.google.com`);
+  // console.log("response", response);
+      try {
+        const res = yield fetch(`https://geocode.search.hereapi.com/v1/geocode?q=Invalidenstr+117+Berlin&apiKey=DLRZl6_8N9Mc2e5GJcfUh8eARww0co3e8WP3kKC-zK4`, {
+          //const res = yield fetch(`https://www.google.com`, {
+          mode: 'no-cors',
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log(res);
+        if (!res.ok) {
+          let errJSON = {};
+          try {
+            errJSON = yield res.json();
+          } catch {}
+          throw Object.assign(res, errJSON);
+        } else {
+          const resJSON = yield res.json();
+          console.log(resJSON);
+          // yield put({
+          //   type: FETCH_EVENTS_SUCCESS_ACTION,
+          //   payload: resJSON
+          // });
+        }
+      } catch (err) {console.log(err);
+        if (err.ok === false) {
+          
+          //yield put({ type: FETCH_EVENTS_FAIL_ACTION, error: err });
+        } else {
+        }
+      }
 
-
-      // const resJSON =  {"test1": "test"};
-      // console.log(resJSON);
-      // yield put({
-      //   type: FETCH_EVENTS_SUCCESS_ACTION,
-      //   payload: resJSON
-      // });
       try{
         let EventsList = [];
         const itemsRef = firebase.database().ref('Mastersheet');
@@ -71,7 +113,9 @@ function* fetchEvents() {
               descript: items[item].Descript, 
               website: items[item].Website,
               start: items[item].Date,
-              end: items[item].Date
+              end: items[item].Date, 
+              lat: items[item].lat, 
+              lng: items[item].lng
             });
           }
          
@@ -81,7 +125,7 @@ function* fetchEvents() {
   
         });
         //const EventType = {"EventType": EventsList};
-        console.log(EventsList);
+        //console.log(EventsList);
         yield put({
           type: FETCH_EVENTS_SUCCESS_ACTION,
           payload: EventsList

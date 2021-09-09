@@ -34,7 +34,9 @@ class EventsSection extends Component {
           descript: items[item].Descript, 
           website: items[item].Website, 
           start: items[item].Date, 
-          end: items[item].Date
+          end: items[item].Date,
+          lat: items[item].lat, 
+          lng: items[item].lng
         });
       }
       console.log(newState);

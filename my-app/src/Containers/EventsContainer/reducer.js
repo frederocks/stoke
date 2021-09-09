@@ -97,8 +97,6 @@ export default function EventsReducer(state = initialState, action) {
          //EventTypeList: action.payload
       };
     default:
-      // const aa = {...state}; 
-      // console.log(aa);
       return {
         ...state
       };

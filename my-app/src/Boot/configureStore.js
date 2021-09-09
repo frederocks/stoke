@@ -23,7 +23,7 @@ const initialState = {};
 
 export default function configureStore() {
   const enhancer = compose(applyMiddleware(...middleware));
-  const store = createStore(createRootReducer(history), initialState, enhancer);
+  const store = createStore(createRootReducer(history), initialState, enhancer );
   sagaMiddleware.run(saga);
 
   return { store, history };
